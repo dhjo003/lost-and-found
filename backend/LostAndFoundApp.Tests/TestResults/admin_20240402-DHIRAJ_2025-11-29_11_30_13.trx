@@ -1,0 +1,330 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TestRun id="eb57047e-9675-4c03-9482-fc9a8d597dd7" name="admin@20240402-DHIRAJ 2025-11-29 11:30:13" runUser="20240402-DHIRAJ\admin" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <Times creation="2025-11-29T11:30:13.9814989+13:00" queuing="2025-11-29T11:30:13.9814998+13:00" start="2025-11-29T11:30:09.1831664+13:00" finish="2025-11-29T11:30:13.9948444+13:00" />
+  <TestSettings name="default" id="34bbd64c-07c6-40fe-8b21-fe33615e5df4">
+    <Deployment runDeploymentRoot="admin_20240402-DHIRAJ_2025-11-29_11_30_13" />
+  </TestSettings>
+  <Results>
+    <UnitTestResult executionId="6f436aae-1595-4552-8b50-d305e33e34e1" testId="9e2baef9-5b3e-53e1-946f-55a18747f9a7" testName="LostAndFoundApp.Tests.Integration.ItemsControllerTests.GetItems_ReturnsSuccessAndJson" computerName="20240402-DHIRAJ" duration="00:00:02.1820479" startTime="2025-11-29T11:30:13.8535733+13:00" endTime="2025-11-29T11:30:13.8535737+13:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="6f436aae-1595-4552-8b50-d305e33e34e1" />
+    <UnitTestResult executionId="8516e8ae-019d-4e91-9523-1fbf833535a0" testId="b7ef38b2-826a-c93d-7af6-9cbe5c4c7aed" testName="LostAndFoundApp.Tests.Unit.ItemServiceTests.InMemoryDb_CanAddAndReadItem" computerName="20240402-DHIRAJ" duration="00:00:01.5586655" startTime="2025-11-29T11:30:13.2342268+13:00" endTime="2025-11-29T11:30:13.2342915+13:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="8516e8ae-019d-4e91-9523-1fbf833535a0" />
+  </Results>
+  <TestDefinitions>
+    <UnitTest name="LostAndFoundApp.Tests.Integration.ItemsControllerTests.GetItems_ReturnsSuccessAndJson" storage="c:\users\admin\onedrive - auckland institute of studies\master of information technology\t3 25\lost and found project\backend\lostandfoundapp.tests\bin\debug\net9.0\lostandfoundapp.tests.dll" id="9e2baef9-5b3e-53e1-946f-55a18747f9a7">
+      <Execution id="6f436aae-1595-4552-8b50-d305e33e34e1" />
+      <TestMethod codeBase="C:\Users\admin\OneDrive - Auckland Institute of Studies\Master of Information Technology\T3 25\Lost and Found Project\backend\LostAndFoundApp.Tests\bin\Debug\net9.0\LostAndFoundApp.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="LostAndFoundApp.Tests.Integration.ItemsControllerTests" name="GetItems_ReturnsSuccessAndJson" />
+    </UnitTest>
+    <UnitTest name="LostAndFoundApp.Tests.Unit.ItemServiceTests.InMemoryDb_CanAddAndReadItem" storage="c:\users\admin\onedrive - auckland institute of studies\master of information technology\t3 25\lost and found project\backend\lostandfoundapp.tests\bin\debug\net9.0\lostandfoundapp.tests.dll" id="b7ef38b2-826a-c93d-7af6-9cbe5c4c7aed">
+      <Execution id="8516e8ae-019d-4e91-9523-1fbf833535a0" />
+      <TestMethod codeBase="C:\Users\admin\OneDrive - Auckland Institute of Studies\Master of Information Technology\T3 25\Lost and Found Project\backend\LostAndFoundApp.Tests\bin\Debug\net9.0\LostAndFoundApp.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="LostAndFoundApp.Tests.Unit.ItemServiceTests" name="InMemoryDb_CanAddAndReadItem" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestEntries>
+    <TestEntry testId="9e2baef9-5b3e-53e1-946f-55a18747f9a7" executionId="6f436aae-1595-4552-8b50-d305e33e34e1" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="b7ef38b2-826a-c93d-7af6-9cbe5c4c7aed" executionId="8516e8ae-019d-4e91-9523-1fbf833535a0" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <TestLists>
+    <TestList name="Results Not in a List" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="All Loaded Results" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <ResultSummary outcome="Completed">
+    <Counters total="2" executed="2" passed="2" failed="0" error="0" timeout="0" aborted="0" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" completed="0" inProgress="0" pending="0" />
+    <Output>
+      <StdOut>[xUnit.net 00:00:00.00] xUnit.net VSTest Adapter v2.4.5+1caef2f33e (64-bit .NET 9.0.11)&#xD;
+[xUnit.net 00:00:01.38]   Discovering: LostAndFoundApp.Tests&#xD;
+[xUnit.net 00:00:01.42]   Discovered:  LostAndFoundApp.Tests&#xD;
+[xUnit.net 00:00:01.43]   Starting:    LostAndFoundApp.Tests&#xD;
+info: LostAndFoundApp[0]&#xD;
+      Ensured uploads directory exists: C:\LostAndFoundUploads\uploads\items&#xD;
+info: LostAndFoundApp[0]&#xD;
+      Serving uploads from C:\LostAndFoundUploads\uploads at /uploads&#xD;
+warn: Microsoft.EntityFrameworkCore.Model.Validation[10622]&#xD;
+      Entity 'Item' has a global query filter defined and is the required end of a relationship with the entity 'ItemImage'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.&#xD;
+warn: Microsoft.EntityFrameworkCore.Model.Validation[10622]&#xD;
+      Entity 'Item' has a global query filter defined and is the required end of a relationship with the entity 'ItemMatch'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.&#xD;
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]&#xD;
+      Executed DbCommand (18ms) [Parameters=[], CommandType='Text', CommandTimeout='30']&#xD;
+      SELECT COUNT(*) FROM "sqlite_master" WHERE "type" = 'table' AND "rootpage" IS NOT NULL;&#xD;
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]&#xD;
+      Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']&#xD;
+      CREATE TABLE "Categories" (&#xD;
+          "Id" INTEGER NOT NULL CONSTRAINT "PK_Categories" PRIMARY KEY AUTOINCREMENT,&#xD;
+          "Name" TEXT NOT NULL,&#xD;
+          "Description" TEXT NULL,&#xD;
+          "IsActive" INTEGER NOT NULL,&#xD;
+          "CreatedAt" TEXT NOT NULL,&#xD;
+          "UpdatedAt" TEXT NULL&#xD;
+      );&#xD;
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]&#xD;
+      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']&#xD;
+      CREATE TABLE "ItemTypes" (&#xD;
+          "Id" INTEGER NOT NULL CONSTRAINT "PK_ItemTypes" PRIMARY KEY AUTOINCREMENT,&#xD;
+          "Name" TEXT NOT NULL,&#xD;
+          "Description" TEXT NULL,&#xD;
+          "IsActive" INTEGER NOT NULL,&#xD;
+          "CreatedAt" TEXT NOT NULL,&#xD;
+          "UpdatedAt" TEXT NULL&#xD;
+      );&#xD;
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]&#xD;
+      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']&#xD;
+      CREATE TABLE "Messages" (&#xD;
+          "Id" INTEGER NOT NULL CONSTRAINT "PK_Messages" PRIMARY KEY AUTOINCREMENT,&#xD;
+          "SenderId" INTEGER NOT NULL,&#xD;
+          "ReceiverId" INTEGER NOT NULL,&#xD;
+          "Content" TEXT NOT NULL,&#xD;
+          "CreatedAt" TEXT NOT NULL,&#xD;
+          "IsRead" INTEGER NOT NULL,&#xD;
+          "ReadAt" TEXT NULL,&#xD;
+          "SenderDeleted" INTEGER NOT NULL,&#xD;
+          "SenderDeletedAt" TEXT NULL,&#xD;
+          "ReceiverDeleted" INTEGER NOT NULL,&#xD;
+          "ReceiverDeletedAt" TEXT NULL,&#xD;
+          "IsDeleted" INTEGER NOT NULL&#xD;
+      );&#xD;
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]&#xD;
+      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']&#xD;
+      CREATE TABLE "Notifications" (&#xD;
+          "Id" INTEGER NOT NULL CONSTRAINT "PK_Notifications" PRIMARY KEY AUTOINCREMENT,&#xD;
+          "UserId" INTEGER NOT NULL,&#xD;
+          "Title" TEXT NOT NULL,&#xD;
+          "Body" TEXT NOT NULL,&#xD;
+          "MetaJson" TEXT NULL,&#xD;
+          "IsRead" INTEGER NOT NULL,&#xD;
+          "CreatedAt" TEXT NOT NULL&#xD;
+      );&#xD;
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]&#xD;
+      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']&#xD;
+      CREATE TABLE "Roles" (&#xD;
+          "RoleId" INTEGER NOT NULL CONSTRAINT "PK_Roles" PRIMARY KEY AUTOINCREMENT,&#xD;
+          "Name" TEXT NOT NULL,&#xD;
+          "Description" TEXT NULL,&#xD;
+          "IsActive" INTEGER NOT NULL,&#xD;
+          "CreatedAt" TEXT NOT NULL&#xD;
+      );&#xD;
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]&#xD;
+      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']&#xD;
+      CREATE TABLE "Statuses" (&#xD;
+          "Id" INTEGER NOT NULL CONSTRAINT "PK_Statuses" PRIMARY KEY AUTOINCREMENT,&#xD;
+          "Name" TEXT NOT NULL,&#xD;
+          "Description" TEXT NULL,&#xD;
+          "IsActive" INTEGER NOT NULL,&#xD;
+          "CreatedAt" TEXT NOT NULL,&#xD;
+          "UpdatedAt" TEXT NULL&#xD;
+      );&#xD;
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]&#xD;
+      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']&#xD;
+      CREATE TABLE "Users" (&#xD;
+          "Id" INTEGER NOT NULL CONSTRAINT "PK_Users" PRIMARY KEY AUTOINCREMENT,&#xD;
+          "GoogleId" TEXT NULL,&#xD;
+          "Email" TEXT NULL,&#xD;
+          "FirstName" TEXT NULL,&#xD;
+          "LastName" TEXT NULL,&#xD;
+          "ProfilePicture" TEXT NULL,&#xD;
+          "RoleId" INTEGER NULL,&#xD;
+          "CreatedAt" TEXT NOT NULL,&#xD;
+          "LastLogin" TEXT NULL,&#xD;
+          "IsDeleted" INTEGER NOT NULL,&#xD;
+          "DeletedAt" TEXT NULL,&#xD;
+          "DeletedByUserId" INTEGER NULL,&#xD;
+          CONSTRAINT "FK_Users_Roles_RoleId" FOREIGN KEY ("RoleId") REFERENCES "Roles" ("RoleId") ON DELETE RESTRICT&#xD;
+      );&#xD;
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]&#xD;
+      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']&#xD;
+      CREATE TABLE "Items" (&#xD;
+          "Id" INTEGER NOT NULL CONSTRAINT "PK_Items" PRIMARY KEY AUTOINCREMENT,&#xD;
+          "UserId" INTEGER NULL,&#xD;
+          "CategoryId" INTEGER NULL,&#xD;
+          "StatusId" INTEGER NULL,&#xD;
+          "TypeId" INTEGER NULL,&#xD;
+          "Name" TEXT NOT NULL,&#xD;
+          "Description" TEXT NULL,&#xD;
+          "Location" TEXT NULL,&#xD;
+          "DateLostFound" TEXT NULL,&#xD;
+          "CreatedAt" TEXT NOT NULL,&#xD;
+          "UpdatedAt" TEXT NULL,&#xD;
+          "IsDeleted" INTEGER NOT NULL,&#xD;
+          "DeletedAt" TEXT NULL,&#xD;
+          "DeletedByUserId" INTEGER NULL,&#xD;
+          CONSTRAINT "FK_Items_Categories_CategoryId" FOREIGN KEY ("CategoryId") REFERENCES "Categories" ("Id") ON DELETE RESTRICT,&#xD;
+          CONSTRAINT "FK_Items_ItemTypes_TypeId" FOREIGN KEY ("TypeId") REFERENCES "ItemTypes" ("Id") ON DELETE RESTRICT,&#xD;
+          CONSTRAINT "FK_Items_Statuses_StatusId" FOREIGN KEY ("StatusId") REFERENCES "Statuses" ("Id") ON DELETE RESTRICT,&#xD;
+          CONSTRAINT "FK_Items_Users_UserId" FOREIGN KEY ("UserId") REFERENCES "Users" ("Id") ON DELETE RESTRICT&#xD;
+      );&#xD;
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]&#xD;
+      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']&#xD;
+      CREATE TABLE "ItemImages" (&#xD;
+          "Id" INTEGER NOT NULL CONSTRAINT "PK_ItemImages" PRIMARY KEY AUTOINCREMENT,&#xD;
+          "ItemId" INTEGER NOT NULL,&#xD;
+          "FileName" TEXT NOT NULL,&#xD;
+          "Url" TEXT NOT NULL,&#xD;
+          "IsPrimary" INTEGER NOT NULL,&#xD;
+          "CreatedAt" TEXT NOT NULL,&#xD;
+          CONSTRAINT "FK_ItemImages_Items_ItemId" FOREIGN KEY ("ItemId") REFERENCES "Items" ("Id") ON DELETE CASCADE&#xD;
+      );&#xD;
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]&#xD;
+      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']&#xD;
+      CREATE TABLE "ItemMatches" (&#xD;
+          "Id" INTEGER NOT NULL CONSTRAINT "PK_ItemMatches" PRIMARY KEY AUTOINCREMENT,&#xD;
+          "LostItemId" INTEGER NOT NULL,&#xD;
+          "FoundItemId" INTEGER NOT NULL,&#xD;
+          "CreatorUserId" INTEGER NOT NULL,&#xD;
+          "Score" INTEGER NOT NULL,&#xD;
+          "IsDeleted" INTEGER NOT NULL,&#xD;
+          "CreatedAt" TEXT NOT NULL,&#xD;
+          "DeletedAt" TEXT NULL,&#xD;
+          "DeletedByUserId" INTEGER NULL,&#xD;
+          CONSTRAINT "FK_ItemMatches_Items_FoundItemId" FOREIGN KEY ("FoundItemId") REFERENCES "Items" ("Id") ON DELETE RESTRICT,&#xD;
+          CONSTRAINT "FK_ItemMatches_Items_LostItemId" FOREIGN KEY ("LostItemId") REFERENCES "Items" ("Id") ON DELETE RESTRICT&#xD;
+      );&#xD;
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]&#xD;
+      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']&#xD;
+      INSERT INTO "Categories" ("Id", "CreatedAt", "Description", "IsActive", "Name", "UpdatedAt")&#xD;
+      VALUES (2, '2025-01-01 00:00:00', 'Wallets, keys, bags', 1, 'Personal Items', NULL);&#xD;
+      SELECT changes();&#xD;
+      INSERT INTO "Categories" ("Id", "CreatedAt", "Description", "IsActive", "Name", "UpdatedAt")&#xD;
+      VALUES (3, '2025-01-01 00:00:00', 'Apparel and accessories', 1, 'Clothing', NULL);&#xD;
+      SELECT changes();&#xD;
+      INSERT INTO "Categories" ("Id", "CreatedAt", "Description", "IsActive", "Name", "UpdatedAt")&#xD;
+      VALUES (4, '2025-01-01 00:00:00', 'IDs, papers', 1, 'Documents', NULL);&#xD;
+      SELECT changes();&#xD;
+      INSERT INTO "Categories" ("Id", "CreatedAt", "Description", "IsActive", "Name", "UpdatedAt")&#xD;
+      VALUES (5, '2025-01-01 00:00:00', 'Miscellaneous', 1, 'Other', NULL);&#xD;
+      SELECT changes();&#xD;
+      INSERT INTO "Categories" ("Id", "CreatedAt", "Description", "IsActive", "Name", "UpdatedAt")&#xD;
+      VALUES (6, '2025-01-01 00:00:00', 'Devices and accessories', 1, 'Electronics', NULL);&#xD;
+      SELECT changes();&#xD;
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]&#xD;
+      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']&#xD;
+      INSERT INTO "ItemTypes" ("Id", "CreatedAt", "Description", "IsActive", "Name", "UpdatedAt")&#xD;
+      VALUES (1, '2025-01-01 00:00:00', 'Item that was lost', 1, 'Lost', NULL);&#xD;
+      SELECT changes();&#xD;
+      INSERT INTO "ItemTypes" ("Id", "CreatedAt", "Description", "IsActive", "Name", "UpdatedAt")&#xD;
+      VALUES (2, '2025-01-01 00:00:00', 'Item that was found', 1, 'Found', NULL);&#xD;
+      SELECT changes();&#xD;
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]&#xD;
+      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']&#xD;
+      INSERT INTO "Roles" ("RoleId", "CreatedAt", "Description", "IsActive", "Name")&#xD;
+      VALUES (1, '2025-01-01 00:00:00', 'Default user role', 1, 'User');&#xD;
+      SELECT changes();&#xD;
+      INSERT INTO "Roles" ("RoleId", "CreatedAt", "Description", "IsActive", "Name")&#xD;
+      VALUES (2, '2025-01-01 00:00:00', 'Administrator', 1, 'Admin');&#xD;
+      SELECT changes();&#xD;
+      INSERT INTO "Roles" ("RoleId", "CreatedAt", "Description", "IsActive", "Name")&#xD;
+      VALUES (3, '2025-01-01 00:00:00', 'Moderator', 1, 'Moderator');&#xD;
+      SELECT changes();&#xD;
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]&#xD;
+      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']&#xD;
+      INSERT INTO "Statuses" ("Id", "CreatedAt", "Description", "IsActive", "Name", "UpdatedAt")&#xD;
+      VALUES (1, '2025-01-01 00:00:00', 'Awaiting review', 1, 'Pending', NULL);&#xD;
+      SELECT changes();&#xD;
+      INSERT INTO "Statuses" ("Id", "CreatedAt", "Description", "IsActive", "Name", "UpdatedAt")&#xD;
+      VALUES (2, '2025-01-01 00:00:00', 'Currently active', 1, 'Active', NULL);&#xD;
+      SELECT changes();&#xD;
+      INSERT INTO "Statuses" ("Id", "CreatedAt", "Description", "IsActive", "Name", "UpdatedAt")&#xD;
+      VALUES (3, '2025-01-01 00:00:00', 'Item claimed', 1, 'Claimed', NULL);&#xD;
+      SELECT changes();&#xD;
+      INSERT INTO "Statuses" ("Id", "CreatedAt", "Description", "IsActive", "Name", "UpdatedAt")&#xD;
+      VALUES (4, '2025-01-01 00:00:00', 'Case closed', 1, 'Closed', NULL);&#xD;
+      SELECT changes();&#xD;
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]&#xD;
+      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']&#xD;
+      CREATE UNIQUE INDEX "IX_Categories_Name" ON "Categories" ("Name");&#xD;
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]&#xD;
+      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']&#xD;
+      CREATE INDEX "IX_ItemImages_ItemId" ON "ItemImages" ("ItemId");&#xD;
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]&#xD;
+      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']&#xD;
+      CREATE INDEX "IX_ItemMatches_FoundItemId" ON "ItemMatches" ("FoundItemId");&#xD;
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]&#xD;
+      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']&#xD;
+      CREATE INDEX "IX_ItemMatches_LostItemId" ON "ItemMatches" ("LostItemId");&#xD;
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]&#xD;
+      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']&#xD;
+      CREATE INDEX "IX_Items_CategoryId" ON "Items" ("CategoryId");&#xD;
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]&#xD;
+      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']&#xD;
+      CREATE INDEX "IX_Items_DeletedAt" ON "Items" ("DeletedAt");&#xD;
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]&#xD;
+      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']&#xD;
+      CREATE INDEX "IX_Items_IsDeleted" ON "Items" ("IsDeleted");&#xD;
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]&#xD;
+      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']&#xD;
+      CREATE INDEX "IX_Items_StatusId" ON "Items" ("StatusId");&#xD;
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]&#xD;
+      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']&#xD;
+      CREATE INDEX "IX_Items_TypeId" ON "Items" ("TypeId");&#xD;
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]&#xD;
+      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']&#xD;
+      CREATE INDEX "IX_Items_UserId" ON "Items" ("UserId");&#xD;
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]&#xD;
+      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']&#xD;
+      CREATE UNIQUE INDEX "IX_ItemTypes_Name" ON "ItemTypes" ("Name");&#xD;
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]&#xD;
+      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']&#xD;
+      CREATE INDEX "IX_Messages_ReceiverId_IsRead" ON "Messages" ("ReceiverId", "IsRead");&#xD;
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]&#xD;
+      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']&#xD;
+      CREATE INDEX "IX_Messages_SenderId_CreatedAt" ON "Messages" ("SenderId", "CreatedAt");&#xD;
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]&#xD;
+      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']&#xD;
+      CREATE UNIQUE INDEX "IX_Roles_Name" ON "Roles" ("Name");&#xD;
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]&#xD;
+      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']&#xD;
+      CREATE UNIQUE INDEX "IX_Statuses_Name" ON "Statuses" ("Name");&#xD;
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]&#xD;
+      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']&#xD;
+      CREATE INDEX "IX_Users_DeletedAt" ON "Users" ("DeletedAt");&#xD;
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]&#xD;
+      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']&#xD;
+      CREATE INDEX "IX_Users_Email" ON "Users" ("Email");&#xD;
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]&#xD;
+      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']&#xD;
+      CREATE INDEX "IX_Users_GoogleId" ON "Users" ("GoogleId");&#xD;
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]&#xD;
+      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']&#xD;
+      CREATE INDEX "IX_Users_IsDeleted" ON "Users" ("IsDeleted");&#xD;
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]&#xD;
+      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']&#xD;
+      CREATE INDEX "IX_Users_RoleId" ON "Users" ("RoleId");&#xD;
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]&#xD;
+      Executed DbCommand (8ms) [Parameters=[@p0='?' (DbType = Int32), @p1='?' (DbType = DateTime), @p2='?' (DbType = DateTime), @p3='?' (DbType = DateTime), @p4='?' (DbType = Int32), @p5='?', @p6='?' (DbType = Boolean), @p7='?', @p8='?' (Size = 8), @p9='?' (DbType = Int32), @p10='?' (DbType = Int32), @p11='?' (DbType = DateTime), @p12='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']&#xD;
+      INSERT INTO "Items" ("CategoryId", "CreatedAt", "DateLostFound", "DeletedAt", "DeletedByUserId", "Description", "IsDeleted", "Location", "Name", "StatusId", "TypeId", "UpdatedAt", "UserId")&#xD;
+      VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11, @p12)&#xD;
+      RETURNING "Id";&#xD;
+warn: Microsoft.AspNetCore.HttpsPolicy.HttpsRedirectionMiddleware[3]&#xD;
+      Failed to determine the https port for redirect.&#xD;
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]&#xD;
+      Executed DbCommand (2ms) [Parameters=[], CommandType='Text', CommandTimeout='30']&#xD;
+      SELECT COUNT(*)&#xD;
+      FROM "Items" AS "i"&#xD;
+      WHERE NOT ("i"."IsDeleted")&#xD;
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]&#xD;
+      Executed DbCommand (0ms) [Parameters=[@__p_1='?' (DbType = Int32), @__p_0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']&#xD;
+      SELECT "i0"."Id", "i0"."Name", "i0"."Description", "i0"."Location", "i0"."DateLostFound", "i0"."CreatedAt", "i0"."UserId", "i0"."CategoryId", "i0"."TypeId", "i0"."StatusId", CASE&#xD;
+          WHEN "u0"."Id" IS NOT NULL THEN trim(COALESCE("u0"."FirstName", '') || ' ' || COALESCE("u0"."LastName", ''))&#xD;
+      END, "c"."Name", "i1"."Name", "s"."Name", "u0"."Id", "c"."Id", "i1"."Id", "s"."Id", "i2"."Id", "i2"."CreatedAt", "i2"."FileName", "i2"."IsPrimary", "i2"."ItemId", "i2"."Url", (&#xD;
+          SELECT "i3"."Url"&#xD;
+          FROM "ItemImages" AS "i3"&#xD;
+          WHERE "i0"."Id" = "i3"."ItemId" AND "i3"."IsPrimary"&#xD;
+          LIMIT 1)&#xD;
+      FROM (&#xD;
+          SELECT "i"."Id", "i"."CategoryId", "i"."CreatedAt", "i"."DateLostFound", "i"."Description", "i"."Location", "i"."Name", "i"."StatusId", "i"."TypeId", "i"."UserId"&#xD;
+          FROM "Items" AS "i"&#xD;
+          WHERE NOT ("i"."IsDeleted")&#xD;
+          ORDER BY "i"."CreatedAt" DESC&#xD;
+          LIMIT @__p_1 OFFSET @__p_0&#xD;
+      ) AS "i0"&#xD;
+      LEFT JOIN (&#xD;
+          SELECT "u"."Id", "u"."FirstName", "u"."LastName"&#xD;
+          FROM "Users" AS "u"&#xD;
+          WHERE NOT ("u"."IsDeleted")&#xD;
+      ) AS "u0" ON "i0"."UserId" = "u0"."Id"&#xD;
+      LEFT JOIN "Categories" AS "c" ON "i0"."CategoryId" = "c"."Id"&#xD;
+      LEFT JOIN "ItemTypes" AS "i1" ON "i0"."TypeId" = "i1"."Id"&#xD;
+      LEFT JOIN "Statuses" AS "s" ON "i0"."StatusId" = "s"."Id"&#xD;
+      LEFT JOIN "ItemImages" AS "i2" ON "i0"."Id" = "i2"."ItemId"&#xD;
+      ORDER BY "i0"."CreatedAt" DESC, "i0"."Id", "u0"."Id", "c"."Id", "i1"."Id", "s"."Id"&#xD;
+[xUnit.net 00:00:03.69]   Finished:    LostAndFoundApp.Tests&#xD;
+</StdOut>
+    </Output>
+  </ResultSummary>
+</TestRun>

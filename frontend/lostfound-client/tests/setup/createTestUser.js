@@ -5,7 +5,24 @@ import mysql from 'mysql2/promise';
 import jwt from 'jsonwebtoken';
 
 export async function createTestUser() {
-  // Read backend appsettings to get DB and JWT config
+  // Try requesting a server-signed token first (preferred for E2E/CI).
+  // This avoids needing DB access or matching local signing keys.
+  const apiBase = process.env.VITE_API_BASE_URL || 'http://localhost:5298';
+  try {
+    const res = await fetch(`${apiBase}/api/test/token`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ Email: 'playwright@test.local', GoogleId: 'playwright-test-1', FirstName: 'Playwright', LastName: 'Tester' })
+    });
+    if (res.ok) {
+      const body = await res.json();
+      return { token: body.token, user: body.user };
+    }
+  } catch (e) {
+    // ignore and fall back to DB/local signing
+  }
+
+  // Read backend appsettings to get DB and JWT config (fallback)
   const cfgPath = fileURLToPath(new URL('../../../../backend/LostAndFoundApp/appsettings.Development.json', import.meta.url));
   const cfg = JSON.parse(fs.readFileSync(cfgPath, 'utf8'));
   const connStr = cfg.ConnectionStrings.DefaultConnection;

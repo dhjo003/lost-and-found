@@ -1,0 +1,33 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "backend", "backend", "{F4E697F3-30A7-49C2-8A05-C3D3931118E3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LostAndFoundApp", "backend\LostAndFoundApp\LostAndFoundApp.csproj", "{2CEB2BFE-F0C4-4BF3-BC73-B5E328B7FE7E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LostAndFoundApp.Tests", "backend\LostAndFoundApp.Tests\LostAndFoundApp.Tests.csproj", "{7D8C2F1E-3A4B-4E6F-9C2A-5B1D3E4F6A7B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2CEB2BFE-F0C4-4BF3-BC73-B5E328B7FE7E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2CEB2BFE-F0C4-4BF3-BC73-B5E328B7FE7E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2CEB2BFE-F0C4-4BF3-BC73-B5E328B7FE7E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2CEB2BFE-F0C4-4BF3-BC73-B5E328B7FE7E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7D8C2F1E-3A4B-4E6F-9C2A-5B1D3E4F6A7B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7D8C2F1E-3A4B-4E6F-9C2A-5B1D3E4F6A7B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7D8C2F1E-3A4B-4E6F-9C2A-5B1D3E4F6A7B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7D8C2F1E-3A4B-4E6F-9C2A-5B1D3E4F6A7B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{2CEB2BFE-F0C4-4BF3-BC73-B5E328B7FE7E} = {F4E697F3-30A7-49C2-8A05-C3D3931118E3}
+	EndGlobalSection
+EndGlobal
