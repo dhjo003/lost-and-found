@@ -1,0 +1,78 @@
+name: E2E Tests
+
+on:
+  pull_request:
+  push:
+    branches: [ main, master ]
+
+jobs:
+  e2e:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '9.0.x'
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Restore backend
+        run: dotnet restore ./backend/LostAndFoundApp/LostAndFoundApp.csproj
+
+      - name: Build backend
+        run: dotnet build ./backend/LostAndFoundApp/LostAndFoundApp.csproj -c Release --no-restore
+
+      - name: Start backend (Testing)
+        env:
+          ASPNETCORE_ENVIRONMENT: Testing
+        run: |
+          nohup dotnet run --project ./backend/LostAndFoundApp/LostAndFoundApp.csproj --urls "http://localhost:5298" > backend.log 2>&1 &
+
+      - name: Wait for backend
+        run: |
+          for i in {1..30}; do
+            if curl -sSf http://localhost:5298/healthz >/dev/null 2>&1 || curl -sSf http://localhost:5298/api/test/token >/dev/null 2>&1; then
+              echo "backend up"; break
+            fi
+            sleep 1
+          done
+
+      - name: Install frontend deps
+        run: npm ci --prefix ./frontend/lostfound-client
+
+      - name: Start frontend
+        run: |
+          nohup npm run dev --prefix ./frontend/lostfound-client -- --port 5173 > frontend.log 2>&1 &
+
+      - name: Wait for frontend
+        run: |
+          for i in {1..30}; do
+            if curl -sSf http://localhost:5173/ >/dev/null 2>&1; then
+              echo "frontend up"; break
+            fi
+            sleep 1
+          done
+
+      - name: Install Playwright browsers
+        run: |
+          cd frontend/lostfound-client
+          npm ci
+          npx playwright install --with-deps
+
+      - name: Run Playwright E2E
+        run: |
+          cd frontend/lostfound-client
+          npx playwright test tests/create-item.spec.js --reporter=list --trace on
+
+      - name: Upload traces on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-traces
+          path: frontend/lostfound-client/test-results

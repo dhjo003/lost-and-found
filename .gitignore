@@ -1,0 +1,49 @@
+# .gitignore for .NET + Node + Visual Studio + OS
+
+# Visual Studio
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Build outputs
+bin/
+obj/
+
+# .NET publish
+publish/
+
+# Rider
+.idea/
+
+# Node
+node_modules/
+dist/
+.npm/
+
+# Vite
+.vite/
+
+# Playwright test results
+frontend/lostfound-client/test-results/
+
+# Logs
+*.log
+
+# OS files
+Thumbs.db
+Desktop.ini
+RECYCLE.BIN/
+*.tmp
+
+# OneDrive / temp
+OneDriveTemp/
+
+# User secrets
+secrets.json
+.env
+.env.*
+
+# uploads folder
+LostAndFoundUploads/
