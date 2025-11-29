@@ -74,6 +74,9 @@ jobs:
           dotnet build ./backend/LostAndFoundApp/LostAndFoundApp.csproj -c Release --no-restore
       - name: Start backend in background
         run: |
+          # Ensure uploads path is Linux-absolute so PhysicalFileProvider doesn't fail on runners
+          export Uploads__RootPath=/tmp/LostAndFoundUploads
+          export ASPNETCORE_ENVIRONMENT=Development
           nohup dotnet run --project ./backend/LostAndFoundApp --configuration Release --urls "http://localhost:5000" > backend.log 2>&1 &
       - name: Wait for backend to be ready
         run: |
