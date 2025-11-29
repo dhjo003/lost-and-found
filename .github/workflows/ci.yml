@@ -29,8 +29,9 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-      - name: Install and run frontend unit tests
+      - name: Install and run frontend unit tests (Vitest only)
         working-directory: frontend/lostfound-client
         run: |
           npm ci
-          npm run test --if-present
+          # Run only unit tests under `src/` so Playwright E2E tests in `tests/` are not picked up by Vitest
+          npx --yes vitest run src --reporter verbose
