@@ -34,7 +34,9 @@ jobs:
         run: |
           # Start the backend with ASPNETCORE_ENVIRONMENT set so the process
           # registers the Testing environment and uses the SQLite provider.
-          nohup dotnet run --project ./backend/LostAndFoundApp/LostAndFoundApp.csproj --urls "http://localhost:5298" > backend.log 2>&1 &
+          # Use --no-launch-profile to avoid loading launchSettings.json which
+          # may override environment variables (launchProfiles often set Development).
+          nohup dotnet run --no-launch-profile --project ./backend/LostAndFoundApp/LostAndFoundApp.csproj --urls "http://localhost:5298" > backend.log 2>&1 &
 
       - name: Wait for backend
         run: |
