@@ -35,6 +35,13 @@ export async function createTestUser() {
     }
   }
 
+  // If we reach here the server token endpoint never returned a successful response.
+  // In CI we must fail fast (do not attempt DB access). In local/dev we still allow
+  // the DB fallback for convenience.
+  if (isCI) {
+    throw new Error('createTestUser: server token endpoint did not return a successful response after retries in CI');
+  }
+
   // Read backend appsettings to get DB and JWT config (fallback)
   const cfgPath = fileURLToPath(new URL('../../../../backend/LostAndFoundApp/appsettings.Development.json', import.meta.url));
   const cfg = JSON.parse(fs.readFileSync(cfgPath, 'utf8'));
