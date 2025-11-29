@@ -14,6 +14,8 @@ var configuration = builder.Configuration;
 
 // --- Services ---
 // Controllers & OpenAPI
+// Register controllers first. Swagger/Swashbuckle is optional and skipped in the
+// `Testing` environment so CI/integration test runs do not require the package.
 builder.Services.AddControllers()
     .AddJsonOptions(opts =>
     {
@@ -22,32 +24,44 @@ builder.Services.AddControllers()
         opts.JsonSerializerOptions.MaxDepth = 64;
     });
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddOpenApi(); // requires Microsoft.AspNetCore.OpenApi package
-// Swagger (Swashbuckle)
-builder.Services.AddSwaggerGen(c =>
+// Only add OpenAPI/Swagger services when NOT running in the `Testing` environment.
+// This makes tests and CI integration runs resilient when Swashbuckle is not
+// present or when we don't want Swagger UI available.
+if (!builder.Environment.IsEnvironment("Testing"))
 {
-    c.SwaggerDoc("v1", new OpenApiInfo { Title = "LostAndFoundApp API", Version = "v1" });
-    // Add JWT auth support to Swagger
-    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    // Optional convenience package for minimal OpenAPI wiring (no-op if not present)
+    try
     {
-        Description = "JWT Authorization header using the Bearer scheme. Example: 'Bearer {token}'",
-        Name = "Authorization",
-        In = ParameterLocation.Header,
-        Type = SecuritySchemeType.Http,
-        Scheme = "bearer",
-        BearerFormat = "JWT"
-    });
-    c.AddSecurityRequirement(new OpenApiSecurityRequirement
+        builder.Services.AddOpenApi(); // requires Microsoft.AspNetCore.OpenApi package
+    }
+    catch { /* ignore if not available */ }
+
+    // Swagger (Swashbuckle) registration - guarded for Testing
+    builder.Services.AddSwaggerGen(c =>
     {
+        c.SwaggerDoc("v1", new OpenApiInfo { Title = "LostAndFoundApp API", Version = "v1" });
+        // Add JWT auth support to Swagger
+        c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
         {
-            new OpenApiSecurityScheme
+            Description = "JWT Authorization header using the Bearer scheme. Example: 'Bearer {token}'",
+            Name = "Authorization",
+            In = ParameterLocation.Header,
+            Type = SecuritySchemeType.Http,
+            Scheme = "bearer",
+            BearerFormat = "JWT"
+        });
+        c.AddSecurityRequirement(new OpenApiSecurityRequirement
+        {
             {
-                Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = "Bearer" }
-            },
-            Array.Empty<string>()
-        }
+                new OpenApiSecurityScheme
+                {
+                    Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = "Bearer" }
+                },
+                Array.Empty<string>()
+            }
+        });
     });
-});
+}
 
 // CORS - allow your frontend origins (adjust as necessary)
 var allowedOrigins = configuration.GetSection("AllowedOrigins").Get<string[]>() ??
@@ -204,7 +218,7 @@ if (app.Environment.IsEnvironment("Testing"))
 }
 
 // --- Middleware pipeline ---
-if (app.Environment.IsDevelopment())
+if (app.Environment.IsDevelopment() && !app.Environment.IsEnvironment("Testing"))
 {
     app.Use(async (context, next) =>
     {
@@ -218,19 +232,19 @@ if (app.Environment.IsDevelopment())
         await next();
     });
     // Enable Swagger UI in development for easy API testing
-    try
-    {
-        app.UseSwagger();
-        app.UseSwaggerUI(c =>
+        try
         {
-            c.SwaggerEndpoint("/swagger/v1/swagger.json", "LostAndFoundApp API V1");
-            c.RoutePrefix = "swagger"; // serve at /swagger
-        });
-    }
-    catch (Exception ex)
-    {
-        app.Logger.LogWarning(ex, "Failed to enable Swagger UI");
-    }
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "LostAndFoundApp API V1");
+                c.RoutePrefix = "swagger"; // serve at /swagger
+            });
+        }
+        catch (Exception ex)
+        {
+            app.Logger.LogWarning(ex, "Failed to enable Swagger UI");
+        }
 }
 
 // In the Testing environment we host on plain HTTP in CI. Avoid forcing
