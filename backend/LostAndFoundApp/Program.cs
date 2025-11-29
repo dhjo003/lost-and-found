@@ -299,6 +299,10 @@ app.MapControllers();
 
 app.MapHub<LostAndFoundApp.Hubs.MessagingHub>("/hubs/messages");
 
+// Lightweight health endpoint used by CI to verify the server is responding.
+// Returns 200 OK with a small JSON payload.
+app.MapGet("/health", () => Results.Json(new { status = "ok" }));
+
 app.Run();
 
 // Expose Program type for integration tests (WebApplicationFactory<Program> requires a public Program class)
