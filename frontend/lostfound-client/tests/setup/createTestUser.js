@@ -25,7 +25,13 @@ export async function createTestUser() {
       if (attempt < maxAttempts) await new Promise(r => setTimeout(r, 1000));
     } catch (e) {
       if (attempt < maxAttempts) await new Promise(r => setTimeout(r, 1000));
-      else console.warn('createTestUser: server token request failed', e && e.message ? e.message : e);
+      else {
+        // In CI we want a clear failure instead of falling back to DB (which often isn't available)
+        if (isCI) {
+          throw new Error('createTestUser: server token endpoint unreachable after retries in CI');
+        }
+        console.warn('createTestUser: server token request failed', e && e.message ? e.message : e);
+      }
     }
   }
 
