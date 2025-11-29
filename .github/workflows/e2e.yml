@@ -71,6 +71,13 @@ jobs:
           npm ci
           npx playwright install --with-deps
 
+      - name: Check backend test token endpoint
+        run: |
+          echo 'POSTing to http://localhost:5298/api/test/token'
+          curl -v -sS -X POST http://localhost:5298/api/test/token -H 'Content-Type: application/json' -d '{"Email":"playwright@test.local","GoogleId":"playwright-test-1","FirstName":"Playwright","LastName":"Tester"}' || true
+          echo '--- backend.log (head) ---'
+          if [ -f backend.log ]; then head -n 200 backend.log || true; else echo 'backend.log not present'; fi
+
       - name: Run Playwright E2E
         env:
           VITE_API_BASE_URL: http://localhost:5298
@@ -84,3 +91,10 @@ jobs:
         with:
           name: playwright-traces
           path: frontend/lostfound-client/test-results
+
+      - name: Upload frontend log on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: frontend-log
+          path: frontend.log
