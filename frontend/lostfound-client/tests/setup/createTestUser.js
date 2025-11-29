@@ -8,18 +8,25 @@ export async function createTestUser() {
   // Try requesting a server-signed token first (preferred for E2E/CI).
   // This avoids needing DB access or matching local signing keys.
   const apiBase = process.env.VITE_API_BASE_URL || 'http://localhost:5298';
-  try {
-    const res = await fetch(`${apiBase}/api/test/token`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ Email: 'playwright@test.local', GoogleId: 'playwright-test-1', FirstName: 'Playwright', LastName: 'Tester' })
-    });
-    if (res.ok) {
-      const body = await res.json();
-      return { token: body.token, user: body.user };
+  const isCI = !!(process.env.CI || process.env.GITHUB_ACTIONS);
+  const maxAttempts = isCI ? 20 : 3;
+  for (let attempt = 1; attempt <= maxAttempts; attempt++) {
+    try {
+      const res = await fetch(`${apiBase}/api/test/token`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ Email: 'playwright@test.local', GoogleId: 'playwright-test-1', FirstName: 'Playwright', LastName: 'Tester' })
+      });
+      if (res.ok) {
+        const body = await res.json();
+        return { token: body.token, user: body.user };
+      }
+      // non-OK: if not last attempt, wait and retry
+      if (attempt < maxAttempts) await new Promise(r => setTimeout(r, 1000));
+    } catch (e) {
+      if (attempt < maxAttempts) await new Promise(r => setTimeout(r, 1000));
+      else console.warn('createTestUser: server token request failed', e && e.message ? e.message : e);
     }
-  } catch (e) {
-    // ignore and fall back to DB/local signing
   }
 
   // Read backend appsettings to get DB and JWT config (fallback)
@@ -88,28 +95,6 @@ export async function createTestUser() {
   const token = jwt.sign(payload, jwtKey, { algorithm: 'HS256', issuer: jwtIssuer, audience: jwtAudience, expiresIn: '12h' });
 
   const userObj = { id: userId, email: testEmail, firstName, lastName, avatarUrl: `/api/users/${userId}/avatar`, roleName };
-
-  // If the running backend exposes the test token endpoint, prefer requesting
-  // a server-signed token so we don't risk key mismatches. This endpoint is
-  // added to the backend only for Development/Testing and is safe for local E2E.
-  try {
-    const apiBase = process.env.VITE_API_BASE_URL || 'http://localhost:5298';
-    const res = await fetch(`${apiBase}/api/test/token`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ Email: testEmail, GoogleId: testGoogleId, FirstName: firstName, LastName: lastName })
-    });
-    if (res.ok) {
-      const body = await res.json();
-      return { token: body.token, user: body.user };
-    } else {
-      const txt = await res.text().catch(() => '<no-body>');
-      console.warn('createTestUser: server token request returned', res.status, txt);
-    }
-  } catch (e) {
-    console.warn('createTestUser: server token request failed', e && e.message ? e.message : e);
-    // ignore and fall back to locally signed token
-  }
 
   return { token, user: userObj };
 }
