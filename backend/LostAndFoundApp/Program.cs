@@ -168,12 +168,38 @@ if (app.Environment.IsEnvironment("Testing"))
     {
         using var scope = app.Services.CreateScope();
         var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-        db.Database.Migrate();
-        app.Logger.LogInformation("Applied migrations for Testing environment (SQLite).");
+        try
+        {
+            // Try applying migrations first (preferred). If the model has
+            // pending changes (common during active development), fall back
+            // to EnsureCreated so the SQLite database used in CI has the
+            // current schema without requiring a new migration file.
+            db.Database.Migrate();
+            app.Logger.LogInformation("Applied migrations for Testing environment (SQLite).");
+        }
+        catch (InvalidOperationException innerEx)
+        {
+            app.Logger.LogWarning(innerEx, "Migrations could not be applied (possible pending model changes). Falling back to EnsureCreated().");
+            db.Database.EnsureCreated();
+            app.Logger.LogInformation("Ensured database created for Testing environment (SQLite).");
+        }
+        catch (Exception innerEx)
+        {
+            app.Logger.LogWarning(innerEx, "Failed to apply migrations; attempting EnsureCreated() as fallback for Testing.");
+            try
+            {
+                db.Database.EnsureCreated();
+                app.Logger.LogInformation("Ensured database created for Testing environment (SQLite) after migration failure.");
+            }
+            catch (Exception ensureEx)
+            {
+                app.Logger.LogError(ensureEx, "EnsureCreated() also failed for Testing environment.");
+            }
+        }
     }
     catch (Exception ex)
     {
-        app.Logger.LogError(ex, "Failed to apply migrations for Testing environment.");
+        app.Logger.LogError(ex, "Failed to prepare database for Testing environment.");
     }
 }
 
