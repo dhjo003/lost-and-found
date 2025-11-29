@@ -41,6 +41,17 @@ jobs:
             fi
             sleep 1
           done
+      - name: Wait for /api/test/token (POST)
+        run: |
+          echo 'Waiting for POST /api/test/token to return 200...'
+          for i in {1..90}; do
+            status=$(curl -s -o /dev/null -w "%{http_code}" -X POST http://localhost:5298/api/test/token -H 'Content-Type: application/json' -d '{"Email":"playwright@test.local","GoogleId":"playwright-test-1"}' || true)
+            echo "Attempt $i -> status=$status"
+            if [ "$status" = "200" ]; then
+              echo 'token endpoint ready'; break
+            fi
+            sleep 1
+          done
 
       - name: Upload backend log on failure
         if: failure()
