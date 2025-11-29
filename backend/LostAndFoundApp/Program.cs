@@ -207,7 +207,13 @@ if (app.Environment.IsDevelopment())
     }
 }
 
-app.UseHttpsRedirection();
+// In the Testing environment we host on plain HTTP in CI. Avoid forcing
+// HTTPS redirection there because the runner does not configure HTTPS endpoints
+// and the redirect would cause POSTs to receive 3xx responses instead of 200.
+if (!app.Environment.IsEnvironment("Testing"))
+{
+    app.UseHttpsRedirection();
+}
 
 app.UseCors();
 

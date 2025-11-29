@@ -103,6 +103,13 @@ jobs:
           name: playwright-traces
           path: frontend/lostfound-client/test-results
 
+      - name: Upload backend log on failure (post-run)
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: backend-log
+          path: backend.log
+
       - name: Upload frontend log on failure
         if: failure()
         uses: actions/upload-artifact@v4
