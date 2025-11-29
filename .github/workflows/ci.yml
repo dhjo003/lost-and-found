@@ -1,4 +1,4 @@
-name: CI
+name: CI - Explicit Test Jobs
 
 on:
   push:
@@ -7,7 +7,8 @@ on:
     branches: [ main, master ]
 
 jobs:
-  backend-tests:
+  backend-unit:
+    name: Backend — Unit tests
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -15,23 +16,88 @@ jobs:
         uses: actions/setup-dotnet@v3
         with:
           dotnet-version: '9.0.x'
-      - name: Restore & Test
-        run: |
-          dotnet restore
-          dotnet test ./backend/LostAndFoundApp.Tests/LostAndFoundApp.Tests.csproj --verbosity normal
+      - name: Restore dependencies
+        run: dotnet restore
+      - name: Run backend unit tests
+        # Filter by FullyQualifiedName containing the Unit namespace
+        run: dotnet test ./backend/LostAndFoundApp.Tests/LostAndFoundApp.Tests.csproj --verbosity normal --filter "FullyQualifiedName~LostAndFoundApp.Tests.Unit"
 
-  frontend-tests:
+  backend-integration:
+    name: Backend — Integration tests
     runs-on: ubuntu-latest
-    needs: backend-tests
+    needs: backend-unit
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '9.0.x'
+      - name: Restore dependencies
+        run: dotnet restore
+      - name: Run backend integration tests
+        run: dotnet test ./backend/LostAndFoundApp.Tests/LostAndFoundApp.Tests.csproj --verbosity normal --filter "FullyQualifiedName~LostAndFoundApp.Tests.Integration"
+
+  frontend-unit:
+    name: Frontend — Unit tests (Vitest)
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-      - name: Install and run frontend unit tests (Vitest only)
+      - name: Install frontend dependencies
+        run: npm ci --prefix ./frontend/lostfound-client
+      - name: Run frontend unit tests (Vitest)
         working-directory: frontend/lostfound-client
         run: |
-          npm ci
           # Run only unit tests under `src/` so Playwright E2E tests in `tests/` are not picked up by Vitest
           npx --yes vitest run src --reporter verbose
+
+  frontend-e2e:
+    name: Frontend — E2E tests (Playwright)
+    runs-on: ubuntu-latest
+    needs: [backend-integration, frontend-unit]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '9.0.x'
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Build backend (Release)
+        run: |
+          dotnet restore ./backend/LostAndFoundApp/LostAndFoundApp.csproj
+          dotnet build ./backend/LostAndFoundApp/LostAndFoundApp.csproj -c Release --no-restore
+      - name: Start backend in background
+        run: |
+          nohup dotnet run --project ./backend/LostAndFoundApp --configuration Release --urls "http://localhost:5000" > backend.log 2>&1 &
+      - name: Wait for backend to be ready
+        run: |
+          for i in {1..30}; do
+            if curl --silent --fail http://localhost:5000/; then
+              echo "backend up"; exit 0;
+            fi
+            sleep 1
+          done
+          echo "Backend did not start"; cat backend.log; exit 1
+      - name: Install frontend deps
+        run: npm ci --prefix ./frontend/lostfound-client
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps --cwd ./frontend/lostfound-client
+      - name: Run Playwright E2E tests
+        working-directory: frontend/lostfound-client
+        env:
+          # Make backend URL available to Playwright config (uses VITE_API_BASE_URL)
+          VITE_API_BASE_URL: http://localhost:5000
+        run: |
+          npx playwright test --reporter=list --trace on
+      - name: Upload Playwright trace on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-traces
+          path: frontend/lostfound-client/playwright-report/**
