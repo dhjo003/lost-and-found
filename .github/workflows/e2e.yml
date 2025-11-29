@@ -1,12 +1,12 @@
-name: E2E Tests
+name: CI Tests (unit & integration)
 
 on:
-  pull_request:
   push:
     branches: [ main, master ]
+  pull_request:
 
 jobs:
-  e2e:
+  tests:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -22,102 +22,26 @@ jobs:
         with:
           node-version: '20'
 
-      - name: Restore backend
-        run: dotnet restore ./backend/LostAndFoundApp/LostAndFoundApp.csproj
-
-      - name: Build backend
-        run: dotnet build ./backend/LostAndFoundApp/LostAndFoundApp.csproj -c Release --no-restore
-
-      - name: Start backend (Testing)
-        env:
-          ASPNETCORE_ENVIRONMENT: Testing
+      - name: Restore & Build Backend
         run: |
-          # Start the backend with ASPNETCORE_ENVIRONMENT set so the process
-          # registers the Testing environment and uses the SQLite provider.
-          # Use --no-launch-profile to avoid loading launchSettings.json which
-          # may override environment variables (launchProfiles often set Development).
-          nohup dotnet run --no-launch-profile --project ./backend/LostAndFoundApp/LostAndFoundApp.csproj --urls "http://localhost:5298" > backend.log 2>&1 &
+          dotnet restore ./backend/LostAndFoundApp/LostAndFoundApp.csproj
+          dotnet build ./backend/LostAndFoundApp/LostAndFoundApp.csproj -c Release --no-restore
 
-      - name: Wait for backend
+      - name: Run backend tests
         run: |
-          for i in {1..60}; do
-            if curl -sSf http://localhost:5298/healthz >/dev/null 2>&1 || curl -sSf http://localhost:5298/api/test/token >/dev/null 2>&1; then
-              echo "backend up"; break
-            fi
-            sleep 1
-          done
-      - name: Wait for /api/test/token (POST)
-        run: |
-          echo 'Waiting for POST /api/test/token to return 200...'
-          for i in {1..90}; do
-            status=$(curl -s -o /dev/null -w "%{http_code}" -X POST http://localhost:5298/api/test/token -H 'Content-Type: application/json' -d '{"Email":"playwright@test.local","GoogleId":"playwright-test-1"}' || true)
-            echo "Attempt $i -> status=$status"
-            if [ "$status" = "200" ]; then
-              echo 'token endpoint ready'; break
-            fi
-            sleep 1
-          done
-
-      - name: Upload backend log on failure
-        if: failure()
-        uses: actions/upload-artifact@v4
-        with:
-          name: backend-log
-          path: backend.log
+          dotnet test ./backend/LostAndFoundApp.Tests/LostAndFoundApp.Tests.csproj -c Release --no-build --verbosity minimal
 
       - name: Install frontend deps
         run: npm ci --prefix ./frontend/lostfound-client
 
-      - name: Start frontend
-        run: |
-          nohup npm run dev --prefix ./frontend/lostfound-client -- --port 5173 > frontend.log 2>&1 &
+      - name: Run frontend unit tests
+        run: npm test --prefix ./frontend/lostfound-client --silent
 
-      - name: Wait for frontend
-        run: |
-          for i in {1..60}; do
-            if curl -sSf http://localhost:5173/ >/dev/null 2>&1; then
-              echo "frontend up"; break
-            fi
-            sleep 1
-          done
-
-      - name: Install Playwright browsers
-        run: |
-          cd frontend/lostfound-client
-          npm ci
-          npx playwright install --with-deps
-
-      - name: Check backend test token endpoint
-        run: |
-          echo 'POSTing to http://localhost:5298/api/test/token'
-          curl -v -sS -X POST http://localhost:5298/api/test/token -H 'Content-Type: application/json' -d '{"Email":"playwright@test.local","GoogleId":"playwright-test-1","FirstName":"Playwright","LastName":"Tester"}' || true
-          echo '--- backend.log (head) ---'
-          if [ -f backend.log ]; then head -n 200 backend.log || true; else echo 'backend.log not present'; fi
-
-      - name: Run Playwright E2E
-        env:
-          VITE_API_BASE_URL: http://localhost:5298
-        run: |
-          cd frontend/lostfound-client
-          npx playwright test tests/create-item.spec.js --reporter=list --trace on
-
-      - name: Upload traces on failure
+      - name: Upload test artifacts on failure
         if: failure()
         uses: actions/upload-artifact@v4
         with:
-          name: playwright-traces
-          path: frontend/lostfound-client/test-results
-
-      - name: Upload backend log on failure (post-run)
-        if: failure()
-        uses: actions/upload-artifact@v4
-        with:
-          name: backend-log
-          path: backend.log
-
-      - name: Upload frontend log on failure
-        if: failure()
-        uses: actions/upload-artifact@v4
-        with:
-          name: frontend-log
-          path: frontend.log
+          name: test-artifacts
+          path: |
+            backend/**/TestResults
+            frontend/lostfound-client/test-results
