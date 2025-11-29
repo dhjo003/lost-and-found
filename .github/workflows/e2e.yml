@@ -29,19 +29,25 @@ jobs:
         run: dotnet build ./backend/LostAndFoundApp/LostAndFoundApp.csproj -c Release --no-restore
 
       - name: Start backend (Testing)
-        env:
-          ASPNETCORE_ENVIRONMENT: Testing
         run: |
-          nohup dotnet run --project ./backend/LostAndFoundApp/LostAndFoundApp.csproj --urls "http://localhost:5298" > backend.log 2>&1 &
+          # Prefix the command with the env to ensure the background process inherits it
+          ASPNETCORE_ENVIRONMENT=Testing nohup dotnet run --project ./backend/LostAndFoundApp/LostAndFoundApp.csproj --urls "http://localhost:5298" > backend.log 2>&1 &
 
       - name: Wait for backend
         run: |
-          for i in {1..30}; do
+          for i in {1..60}; do
             if curl -sSf http://localhost:5298/healthz >/dev/null 2>&1 || curl -sSf http://localhost:5298/api/test/token >/dev/null 2>&1; then
               echo "backend up"; break
             fi
             sleep 1
           done
+
+      - name: Upload backend log on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: backend-log
+          path: backend.log
 
       - name: Install frontend deps
         run: npm ci --prefix ./frontend/lostfound-client
@@ -52,7 +58,7 @@ jobs:
 
       - name: Wait for frontend
         run: |
-          for i in {1..30}; do
+          for i in {1..60}; do
             if curl -sSf http://localhost:5173/ >/dev/null 2>&1; then
               echo "frontend up"; break
             fi
