@@ -67,13 +67,22 @@ builder.Services.AddCors(options =>
 var connectionString = configuration.GetConnectionString("DefaultConnection")
                        ?? configuration["ConnectionStrings:Default"]
                        ?? "server=localhost;user=root;password=root;database=lostandfounddb";
-
-// During integration tests we prefer the test project to register a test provider
-// (e.g. SQLite in-memory). Guard the production MySQL registration so tests can
-// choose their own provider without causing multiple providers to be present
-// in the same service provider.
-if (!builder.Environment.IsEnvironment("Testing"))
+// Configure database provider. Use MySQL in non-testing environments, and a
+// lightweight SQLite file for the `Testing` environment so the hosted app in CI
+// can serve test requests without requiring a MySQL server.
+if (builder.Environment.IsEnvironment("Testing"))
 {
+    var sqliteFile = Path.Combine(builder.Environment.ContentRootPath, "lostandfound_tests.db");
+    var sqliteConn = $"Data Source={sqliteFile}";
+    builder.Services.AddDbContext<AppDbContext>(options =>
+    {
+        options.UseSqlite(sqliteConn);
+    });
+}
+else
+{
+    // During integration tests (external test projects) they may register a
+    // different provider; but for normal runs use MySQL by default.
     builder.Services.AddDbContext<AppDbContext>(options =>
     {
         // ServerVersion.AutoDetect will inspect the connection; it's convenient for local/dev
@@ -150,6 +159,23 @@ builder.Services.AddAuthentication(options =>
 builder.Services.AddAuthorization();
 
 var app = builder.Build();
+
+// If running in the Testing environment, ensure the SQLite database exists and
+// apply migrations so the `TestController` and other controllers can operate.
+if (app.Environment.IsEnvironment("Testing"))
+{
+    try
+    {
+        using var scope = app.Services.CreateScope();
+        var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+        db.Database.Migrate();
+        app.Logger.LogInformation("Applied migrations for Testing environment (SQLite).");
+    }
+    catch (Exception ex)
+    {
+        app.Logger.LogError(ex, "Failed to apply migrations for Testing environment.");
+    }
+}
 
 // --- Middleware pipeline ---
 if (app.Environment.IsDevelopment())
