@@ -29,9 +29,12 @@ jobs:
         run: dotnet build ./backend/LostAndFoundApp/LostAndFoundApp.csproj -c Release --no-restore
 
       - name: Start backend (Testing)
+        env:
+          ASPNETCORE_ENVIRONMENT: Testing
         run: |
-          # Prefix the command with the env to ensure the background process inherits it
-          ASPNETCORE_ENVIRONMENT=Testing nohup dotnet run --project ./backend/LostAndFoundApp/LostAndFoundApp.csproj --urls "http://localhost:5298" > backend.log 2>&1 &
+          # Start the backend with ASPNETCORE_ENVIRONMENT set so the process
+          # registers the Testing environment and uses the SQLite provider.
+          nohup dotnet run --project ./backend/LostAndFoundApp/LostAndFoundApp.csproj --urls "http://localhost:5298" > backend.log 2>&1 &
 
       - name: Wait for backend
         run: |
