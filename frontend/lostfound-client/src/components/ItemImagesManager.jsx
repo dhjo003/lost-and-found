@@ -79,13 +79,13 @@ export default function ItemImagesManager({ itemId, initialImages = [], onChange
               <img src={img.url || img.Url} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
             </div>
             {img.isPrimary && <div style={{ position: 'absolute', left: 6, top: 6, background: 'var(--accent)', color: '#fff', padding: '2px 6px', borderRadius: 6, fontSize: 12 }}>Primary</div>}
-            <div style={{ display: 'flex', justifyContent: 'center', gap: 6, marginTop: 6 }}>
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'stretch', gap: 6, marginTop: 6 }}>
               {img.isPrimary ? (
-                <div style={{ padding: '4px 8px', background: 'var(--accent)', color: '#fff', borderRadius: 6 }}>Primary</div>
+                <div style={{ padding: '4px 8px', background: 'var(--accent)', color: '#fff', borderRadius: 6, textAlign: 'center' }}>Primary</div>
               ) : (
-                canManage ? <button className="btn small" onClick={() => handleSetPrimary(img)}>Make primary</button> : null
+                canManage ? <button className="btn small" style={{ width: '100%', boxSizing: 'border-box' }} onClick={() => handleSetPrimary(img)}>Make primary</button> : null
               )}
-              {canManage ? <button className="btn small danger" onClick={() => handleDelete(img)}>Delete</button> : null}
+              {canManage ? <button className="btn small danger" style={{ width: '100%', boxSizing: 'border-box' }} onClick={() => handleDelete(img)}>Delete</button> : null}
             </div>
           </div>
         ))}
