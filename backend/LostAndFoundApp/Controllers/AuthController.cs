@@ -54,7 +54,9 @@ namespace LostAndFoundApp.Controllers
             }
             catch (InvalidJwtException ex)
             {
-                _logger.LogWarning(ex, "Invalid Google ID token");
+                // Log the exception message and full exception for debugging (includes audience/expiry details)
+                _logger.LogWarning(ex, "Invalid Google ID token: {Message}", ex.Message);
+                _logger.LogDebug(ex, "Google token validation exception: {Exception}", ex.ToString());
                 return Unauthorized(new { error = "Invalid Google token" });
             }
 
